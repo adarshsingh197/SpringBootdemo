@@ -22,3 +22,17 @@ public class Order extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }
+
+
+//one more way to create a table is to use the @Entity annotation and the @Table annotation to create a table.
+// @Entity
+// @Table(name = "orders")
+// public class Order extends BaseEntity {
+//     private OrderStatus status;
+
+//     @ManyToMany
+//     @JoinTable(name = "order_products",
+//         joinColumns = @JoinColumn(name = "order_id"),
+//         inverseJoinColumns = @JoinColumn(name = "product_id"))
+//     private List<OrderProducts> products;
+// }
