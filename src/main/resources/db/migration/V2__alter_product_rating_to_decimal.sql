@@ -1,0 +1,2 @@
+ALTER TABLE products
+    MODIFY COLUMN rating DECIMAL(3,2);

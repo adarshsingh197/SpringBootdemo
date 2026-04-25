@@ -34,7 +34,7 @@ public class Product extends BaseEntity {
     private String image;
     @JoinColumn(name ="category_id",nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
-    private String rating;
+    private Category category; 
+    private BigDecimal rating;
     
 }

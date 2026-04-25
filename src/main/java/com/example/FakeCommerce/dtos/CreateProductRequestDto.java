@@ -19,7 +19,7 @@ public class CreateProductRequestDto {
     private String image;
     private String category;
     private Long categoryId;
-    private String rating;
+    private BigDecimal rating;
 
     public Long getCategoryById() {
         return categoryId;
