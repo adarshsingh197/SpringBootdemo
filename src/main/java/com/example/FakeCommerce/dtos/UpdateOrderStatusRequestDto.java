@@ -1,5 +1,7 @@
 package com.example.FakeCommerce.dtos;
 
+import com.example.FakeCommerce.schema.OrderStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class CategoryResponseDto  {
-    private Long id;
-    private String name;
+public class UpdateOrderStatusRequestDto {
+    private OrderStatus status;
 }
-

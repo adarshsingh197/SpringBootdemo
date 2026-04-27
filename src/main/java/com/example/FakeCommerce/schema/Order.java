@@ -23,6 +23,8 @@ import lombok.NoArgsConstructor;
 @SQLRestriction("deleted_at IS NULL")
 public class Order extends BaseEntity {
 
+    private Long userId;
+
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 }

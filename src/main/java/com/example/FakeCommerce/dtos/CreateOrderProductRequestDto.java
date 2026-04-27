@@ -9,8 +9,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class CategoryResponseDto  {
-    private Long id;
-    private String name;
+public class CreateOrderProductRequestDto {
+    private Long productId;
+    private Integer quantity;
 }
-

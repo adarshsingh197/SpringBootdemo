@@ -1,5 +1,9 @@
 package com.example.FakeCommerce.dtos;
 
+import java.util.List;
+
+import com.example.FakeCommerce.schema.OrderStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,8 +13,9 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class CategoryResponseDto  {
+public class OrderResponseDto {
     private Long id;
-    private String name;
+    private Long userId;
+    private OrderStatus status;
+    private List<OrderProductResponseDto> products;
 }
-

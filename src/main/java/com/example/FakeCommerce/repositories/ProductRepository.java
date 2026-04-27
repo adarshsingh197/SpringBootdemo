@@ -12,9 +12,9 @@ import com.example.FakeCommerce.schema.Product;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    List<Product> findByCategory(String category);
+    List<Product> findByCategoryName(String category);
 
-    @Query(value = "select distinct p.category from products p where p.category is not null", nativeQuery = true)
+    @Query("select distinct c.name from Product p join p.category c where c.name is not null")
     List<String> findDistinctCategories();
 
     @Query("select p from Product p join fetch p.category c where p.id = :id")
