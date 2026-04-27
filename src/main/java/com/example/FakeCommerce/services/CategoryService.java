@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.FakeCommerce.dtos.CategoryResponseDto;
 import com.example.FakeCommerce.dtos.CreateCategoryRequestDto;
+import com.example.FakeCommerce.exceptions.NotFoundException;
 import com.example.FakeCommerce.repositories.CategoryRepository;
 import com.example.FakeCommerce.schema.Category;
 
@@ -31,7 +32,7 @@ public class CategoryService {
     public Category getCategoryById(Long id) {
         return categoryRepository
                 .findById(id)
-                .orElseThrow(() -> new RuntimeException("category not found"));
+                .orElseThrow(() -> new NotFoundException("category not found"));
     }
 
     public CategoryResponseDto getCategoryResponseById(Long id) {
@@ -52,4 +53,3 @@ public class CategoryService {
         categoryRepository.deleteById(id);
     }
 }
-
