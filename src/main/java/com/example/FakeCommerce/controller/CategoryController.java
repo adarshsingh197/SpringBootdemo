@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.FakeCommerce.dtos.CreateCategoryRequestDto;
 import com.example.FakeCommerce.dtos.CategoryResponseDto;
 import com.example.FakeCommerce.services.CategoryService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,23 +26,24 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public List<CategoryResponseDto> getAllCategories() {
-        return categoryService.getAllCategoryResponses();
+    public ApiResponse<List<CategoryResponseDto>> getAllCategories() {
+        return ApiResponse.success("Categories fetched successfully", categoryService.getAllCategoryResponses());
     }
 
     @GetMapping("/{id}")
-    public CategoryResponseDto getCategoryById(@PathVariable Long id) {
-        return categoryService.getCategoryResponseById(id);
+    public ApiResponse<CategoryResponseDto> getCategoryById(@PathVariable Long id) {
+        return ApiResponse.success("Category fetched successfully", categoryService.getCategoryResponseById(id));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponseDto> createCategory(@RequestBody CreateCategoryRequestDto requestDto) {
+    public ResponseEntity<ApiResponse<CategoryResponseDto>> createCategory(@RequestBody CreateCategoryRequestDto requestDto) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(categoryService.createCategory(requestDto));
+                .body(ApiResponse.success("Category created successfully", categoryService.createCategory(requestDto)));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCategory(@PathVariable Long id) {
+    public ApiResponse<Object> deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
+        return ApiResponse.success("Category deleted successfully", null);
     }
 }

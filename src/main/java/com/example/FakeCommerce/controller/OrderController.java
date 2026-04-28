@@ -16,6 +16,7 @@ import com.example.FakeCommerce.dtos.OrderResponseDto;
 import com.example.FakeCommerce.dtos.OrderSummaryResponseDto;
 import com.example.FakeCommerce.dtos.UpdateOrderStatusRequestDto;
 import com.example.FakeCommerce.services.OrderService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,40 +27,41 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<OrderResponseDto> getAllOrders() {
-        return orderService.getAllOrders();
+    public ApiResponse<List<OrderResponseDto>> getAllOrders() {
+        return ApiResponse.success("Orders fetched successfully", orderService.getAllOrders());
     }
 
     @GetMapping("/{id}")
-    public OrderResponseDto getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id);
+    public ApiResponse<OrderResponseDto> getOrderById(@PathVariable Long id) {
+        return ApiResponse.success("Order fetched successfully", orderService.getOrderById(id));
     }
 
     @GetMapping("/{id}/summary")
-    public OrderSummaryResponseDto getOrderSummary(@PathVariable Long id) {
-        return orderService.getOrderSummary(id);
+    public ApiResponse<OrderSummaryResponseDto> getOrderSummary(@PathVariable Long id) {
+        return ApiResponse.success("Order summary fetched successfully", orderService.getOrderSummary(id));
     }
 
     @GetMapping("/user/{userId}")
-    public List<OrderResponseDto> getOrdersByUserId(@PathVariable Long userId) {
-        return orderService.getOrdersByUserId(userId);
+    public ApiResponse<List<OrderResponseDto>> getOrdersByUserId(@PathVariable Long userId) {
+        return ApiResponse.success("User orders fetched successfully", orderService.getOrdersByUserId(userId));
     }
 
     @PostMapping
-    public OrderResponseDto createOrder(@RequestBody CreateOrderRequestDto requestDto) {
-        return orderService.createOrder(requestDto);
+    public ApiResponse<OrderResponseDto> createOrder(@RequestBody CreateOrderRequestDto requestDto) {
+        return ApiResponse.success("Order created successfully", orderService.createOrder(requestDto));
     }
 
     @PatchMapping("/{id}/status")
-    public OrderResponseDto updateOrderStatus(
+    public ApiResponse<OrderResponseDto> updateOrderStatus(
             @PathVariable Long id,
             @RequestBody UpdateOrderStatusRequestDto requestDto
     ) {
-        return orderService.updateOrderStatus(id, requestDto);
+        return ApiResponse.success("Order status updated successfully", orderService.updateOrderStatus(id, requestDto));
     }
 
     @DeleteMapping("/{id}")
-    public void deleteOrder(@PathVariable Long id) {
+    public ApiResponse<Object> deleteOrder(@PathVariable Long id) {
         orderService.deleteOrder(id);
+        return ApiResponse.success("Order deleted successfully", null);
     }
 }

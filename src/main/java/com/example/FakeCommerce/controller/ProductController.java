@@ -15,6 +15,7 @@ import com.example.FakeCommerce.dtos.CreateProductRequestDto;
 import com.example.FakeCommerce.dtos.GetProductWithDetailsResponseDto;
 import com.example.FakeCommerce.dtos.ProductResponseDto;
 import com.example.FakeCommerce.services.ProductService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,33 +27,35 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<ProductResponseDto> getAllProducts(@RequestParam(required = false) String category){
-        return productService.getAllProductResponses(category);
+    public ApiResponse<List<ProductResponseDto>> getAllProducts(@RequestParam(required = false) String category){
+        return ApiResponse.success("Products fetched successfully", productService.getAllProductResponses(category));
     }
 
     @GetMapping("/{id}")
-    public ProductResponseDto getProductById(@PathVariable Long id) {
-        return productService.getProductResponseById(id);
+    public ApiResponse<ProductResponseDto> getProductById(@PathVariable Long id) {
+        return ApiResponse.success("Product fetched successfully", productService.getProductResponseById(id));
     }
 
     @GetMapping("/{id}/details")
-    public GetProductWithDetailsResponseDto getProductWithDetailsResponseDto(@PathVariable Long id){
-        return productService.getProductWithDetailsResponseById(id);
+    public ApiResponse<GetProductWithDetailsResponseDto> getProductWithDetailsResponseDto(@PathVariable Long id){
+        return ApiResponse.success("Product details fetched successfully",
+                productService.getProductWithDetailsResponseById(id));
     }
 
 
     @GetMapping("/categories")
-    public List<String> getDistinctCategories() {
-        return productService.getDistinctCategories();
+    public ApiResponse<List<String>> getDistinctCategories() {
+        return ApiResponse.success("Product categories fetched successfully", productService.getDistinctCategories());
     }
 
     @PostMapping
-    public ProductResponseDto createProduct(@RequestBody CreateProductRequestDto reauestDto){
-        return productService.createProductResponse(reauestDto);
+    public ApiResponse<ProductResponseDto> createProduct(@RequestBody CreateProductRequestDto reauestDto){
+        return ApiResponse.success("Product created successfully", productService.createProductResponse(reauestDto));
     }
     @DeleteMapping("/{id}")
-    public void deleteProduct(@PathVariable Long id){
+    public ApiResponse<Object> deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
+        return ApiResponse.success("Product deleted successfully", null);
         
     }
     

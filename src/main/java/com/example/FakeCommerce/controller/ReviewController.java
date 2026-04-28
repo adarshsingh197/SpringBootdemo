@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.FakeCommerce.dtos.CreateReviewRequestDto;
 import com.example.FakeCommerce.dtos.ReviewResponseDto;
 import com.example.FakeCommerce.services.ReviewService;
+import com.example.FakeCommerce.utils.ApiResponse;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,26 +25,28 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping
-    public ReviewResponseDto createReview(@RequestBody CreateReviewRequestDto requestDto) {
-        return reviewService.createReview(requestDto);
+    public ApiResponse<ReviewResponseDto> createReview(@RequestBody CreateReviewRequestDto requestDto) {
+        return ApiResponse.success("Review created successfully", reviewService.createReview(requestDto));
     }
 
     @GetMapping
-    public List<ReviewResponseDto> getReviews(
+    public ApiResponse<List<ReviewResponseDto>> getReviews(
             @RequestParam(required = false) Long productId,
             @RequestParam(required = false) Long orderId
     ) {
         if (productId != null) {
-            return reviewService.getReviewsByProduct(productId);
+            return ApiResponse.success("Product reviews fetched successfully",
+                    reviewService.getReviewsByProduct(productId));
         }
         if (orderId != null) {
-            return reviewService.getReviewsByOrder(orderId);
+            return ApiResponse.success("Order reviews fetched successfully", reviewService.getReviewsByOrder(orderId));
         }
-        return reviewService.getAllReviews();
+        return ApiResponse.success("Reviews fetched successfully", reviewService.getAllReviews());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteReview(@PathVariable Long id) {
+    public ApiResponse<Object> deleteReview(@PathVariable Long id) {
         reviewService.deleteReview(id);
+        return ApiResponse.success("Review deleted successfully", null);
     }
 }
