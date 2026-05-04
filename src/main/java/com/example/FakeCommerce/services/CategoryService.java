@@ -41,7 +41,7 @@ public class CategoryService {
 
     public Category createCategory(Category category) {
         return categoryRepository.save(category);
-    }
+    }  
 
     public CategoryResponseDto createCategory(CreateCategoryRequestDto requestDto) {
         Category category = Category.builder().name(requestDto.getName()).build();
@@ -50,6 +50,9 @@ public class CategoryService {
     }
 
     public void deleteCategory(Long id) {
+        if (!categoryRepository.existsById(id)) {
+            throw new NotFoundException("category not found");
+        }
         categoryRepository.deleteById(id);
     }
 }
